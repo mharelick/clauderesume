@@ -121,6 +121,7 @@ def write_docx(blocks: list[Block], target: Path) -> None:
             run.font.size = Pt(16)
         elif kind == "section":
             para = doc.add_paragraph()
+            para.alignment = 1
             para.paragraph_format.space_before = Pt(9)
             para.paragraph_format.keep_with_next = True
             para.add_run(value.upper()).bold = True
@@ -145,7 +146,7 @@ def write_pdf(blocks: list[Block], target: Path) -> None:
     styles = {
         "name": ParagraphStyle("name", fontName="Helvetica-Bold", fontSize=16, leading=19, alignment=TA_CENTER, spaceAfter=3),
         "contact": ParagraphStyle("contact", fontName="Helvetica", fontSize=9, leading=12, alignment=TA_CENTER, spaceAfter=7),
-        "section": ParagraphStyle("section", fontName="Helvetica-Bold", fontSize=10, leading=12, textColor=colors.HexColor("#18354D"), spaceBefore=9, spaceAfter=3, keepWithNext=True),
+        "section": ParagraphStyle("section", fontName="Helvetica-Bold", fontSize=10, leading=12, textColor=colors.HexColor("#18354D"), alignment=TA_CENTER, spaceBefore=9, spaceAfter=3, keepWithNext=True),
         "role": ParagraphStyle("role", fontName="Helvetica-Bold", fontSize=10, leading=12, spaceBefore=5, spaceAfter=2, keepWithNext=True),
         "text": ParagraphStyle("text", fontName="Helvetica", fontSize=9.5, leading=12.5, spaceAfter=3),
         "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=9.5, leading=12.5, leftIndent=15, firstLineIndent=-8, spaceAfter=3),

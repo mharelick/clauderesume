@@ -43,6 +43,9 @@ class RendererTest(unittest.TestCase):
             self.assertIn(phrase, " ".join(p.text for p in Document(root / "resume.docx").paragraphs))
             self.assertIn(phrase, PdfReader(root / "resume.pdf").pages[0].extract_text())
             self.assertIn(phrase, (root / "resume.txt").read_text(encoding="utf-8"))
+            headings = [p for p in Document(root / "resume.docx").paragraphs if p.text in {"SUMMARY", "EXPERIENCE", "SKILLS"}]
+            self.assertEqual(len(headings), 3)
+            self.assertTrue(all(p.alignment == 1 for p in headings))
             self.assertTrue(source.is_file())
             bad_first_person = renderer.parse_markdown("# Sample Candidate\n## Experience\n- I built a framework.\n")
             with self.assertRaises(ValueError):
