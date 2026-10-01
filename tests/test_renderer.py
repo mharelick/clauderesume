@@ -25,6 +25,7 @@ class RendererTest(unittest.TestCase):
                 "The source had a long distinctive sentence about a fictional service and its release checks.\n",
                 encoding="utf-8",
             )
+            (data / "~$lock.docx").write_bytes(b"office lock file, not a document")
             source = root / "resume.md"
             source.write_text(
                 "# Sample Candidate\nCity, ST | sample@example.invalid\n"
@@ -42,7 +43,7 @@ class RendererTest(unittest.TestCase):
             phrase = "Improved release confidence for the team"
             self.assertIn(phrase, " ".join(p.text for p in Document(root / "resume.docx").paragraphs))
             self.assertIn(phrase, PdfReader(root / "resume.pdf").pages[0].extract_text())
-            self.assertIn(phrase, (root / "resume.txt").read_text(encoding="utf-8"))
+            self.assertIn("• Built regression checks", (root / "resume.txt").read_text(encoding="utf-8"))
             headings = [p for p in Document(root / "resume.docx").paragraphs if p.text in {"SUMMARY", "EXPERIENCE", "SKILLS"}]
             self.assertEqual(len(headings), 3)
             self.assertTrue(all(p.alignment == 1 for p in headings))

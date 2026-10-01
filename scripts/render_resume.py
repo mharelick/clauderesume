@@ -75,7 +75,8 @@ def copied_prose(blocks: list[Block], data_dir: Path, width: int = 10) -> str | 
     if not candidate_grams:
         return None
     for path in sorted(data_dir.rglob("*")):
-        if not path.is_file() or path.suffix.lower() not in {".md", ".txt", ".docx", ".pdf"}:
+        if (not path.is_file() or path.name.startswith("~$")
+                or path.suffix.lower() not in {".md", ".txt", ".docx", ".pdf"}):
             continue
         try:
             source = words(extract_source_text(path))
@@ -169,7 +170,7 @@ def write_txt(blocks: list[Block], target: Path) -> None:
         elif kind == "role":
             lines.extend(("", value))
         elif kind == "bullet":
-            lines.append("- " + value)
+            lines.append("• " + value)
         else:
             lines.append(value)
     target.write_text("\n".join(lines).strip() + "\n", encoding="utf-8")
