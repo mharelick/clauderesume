@@ -87,7 +87,9 @@ def copied_prose(blocks: list[Block], data_dir: Path, width: int = 10) -> str | 
     return None
 
 
-DASH_RE = re.compile(r"[-‐-―−]")
+# Dashes used as punctuation: en/em dashes and similar, a spaced hyphen, or a double hyphen.
+# A hyphen inside a compound word (end-to-end) is allowed.
+DASH_RE = re.compile(r"[‒-―−]|\s-|-\s|--")
 
 
 def load_vocabulary(data_dir: Path) -> list[tuple[str, str]]:
@@ -111,7 +113,7 @@ def validate(blocks: list[Block], data_dir: Path) -> None:
         if kind == "name" or (index == 1 and kind == "text"):
             continue
         if DASH_RE.search(value):
-            raise ValueError("Hyphen or dash found; write compounds as separate words or reword")
+            raise ValueError("Dash used as sentence punctuation; split into separate sentences")
         for avoid, write in vocabulary:
             if re.search(rf"(?<!\w){re.escape(avoid)}(?!\w)", value):
                 raise ValueError(f"Use '{write}' instead of '{avoid}' (see data/vocabulary.md)")

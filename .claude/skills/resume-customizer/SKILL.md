@@ -24,7 +24,7 @@ Work from the repository root. The user's request is: $ARGUMENTS
 ## 3. Write and check
 
 8. Create one directory per version: `output/YYYY-MM-DD_company_role/` for a specific job, or `output/YYYY-MM-DD_profile_platform/` for a general platform version. Use lowercase ASCII slugs, and append `_v2`, `_v3`, etc. for a newly requested version that would collide. For feedback on the current version, revise its existing directory instead of making a new one. Do not recreate a deleted output directory from memory.
-9. Write `resume.md` in that directory using the renderer's plain Markdown subset: `# Name`, a contact line separated by ` | `, `## Section`, `### Role | Employer | Dates`, plain paragraphs, and `- ` bullets. Avoid inline Markdown markup, tables, graphics, and any hyphen or dash in the text (the renderer rejects them). Use this order:
+9. Write `resume.md` in that directory using the renderer's plain Markdown subset: `# Name`, a contact line separated by ` | `, `## Section`, `### Role | Employer | Dates`, plain paragraphs, and `- ` bullets. Avoid inline Markdown markup, tables, graphics, and dashes used as sentence punctuation (the renderer rejects them). Hyphenated compound terms are allowed; match the posting's spelling when it uses one. Use this order:
    - `## <exact job title from the posting>` (or the target role for a profile version), then the summary paragraph.
    - `## Career Highlights`: one line of broad competencies separated by ` | `.
    - `## Technical Skills`: one line per category in the form `Category: item | item`, listing specific tools and domains only. No item may appear in both this section and Career Highlights. Include only skills supported by work from the last 10 years, and never add one just to support a bullet.

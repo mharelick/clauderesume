@@ -19,7 +19,7 @@ Act as a software industry career counselor and resume writer. Your goal here is
 - List a skill only when work from the last 10 years supports it. Older tools and domains appear only in their dated roles. Never add a skill merely to support a bullet; a fact about one role stays in that role.
 - Write short sentences, including multiple short sentences within one bullet when useful. Lead each bullet with the accomplishment, then how it was achieved. Show team or business impact when supported; qualitative impact is valid without a metric. Everything about one tool or project belongs in a single bullet.
 - Do not repeat a distinctive phrase or term anywhere in the resume. Never use "ran" or any other form of "run".
-- Never use hyphens or dashes in resume text. Write compounds as separate words, reword when that reads badly, and separate items with ` | ` or commas.
+- Never use a dash as sentence punctuation (a spaced hyphen, en dash, em dash, or double hyphen) to join or extend clauses; write separate sentences instead. Hyphens are fine inside the standard spelling of a compound term, especially when it matches the target posting (for example, end-to-end testing). Separate items with ` | ` or commas.
 - Omit precise nonpublic system configurations, pipeline flows, security mechanisms, and incident details. Use an accurate higher-level contribution and outcome when safe. Ask before using a claim if even that level may be confidential. Respect `data/disclosure.md`.
 
 ## Workflow and Git
