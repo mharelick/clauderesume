@@ -90,11 +90,31 @@ def copied_prose(blocks: list[Block], data_dir: Path, width: int = 10) -> str | 
 DASH_RE = re.compile(r"[-‐-―−]")
 
 
+def load_vocabulary(data_dir: Path) -> list[tuple[str, str]]:
+    """Return (avoid, write) pairs from the Write | Meaning | Avoid tables in vocabulary.md."""
+    path = data_dir / "vocabulary.md"
+    if not path.is_file():
+        return []
+    pairs = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        cols = [col.strip() for col in line.strip().strip("|").split("|")]
+        if len(cols) < 3 or cols[0] == "Write" or not cols[0].strip("-: "):
+            continue
+        pairs.extend((avoid.strip(), cols[0]) for avoid in cols[2].split(",") if avoid.strip())
+    return pairs
+
+
 def validate(blocks: list[Block], data_dir: Path) -> None:
+    vocabulary = load_vocabulary(data_dir)
     for index, (kind, value) in enumerate(blocks):
         # The name and contact line may legitimately contain hyphens (emails, URLs).
-        if kind != "name" and not (index == 1 and kind == "text") and DASH_RE.search(value):
+        if kind == "name" or (index == 1 and kind == "text"):
+            continue
+        if DASH_RE.search(value):
             raise ValueError("Hyphen or dash found; write compounds as separate words or reword")
+        for avoid, write in vocabulary:
+            if re.search(rf"(?<!\w){re.escape(avoid)}(?!\w)", value):
+                raise ValueError(f"Use '{write}' instead of '{avoid}' (see data/vocabulary.md)")
         if kind not in {"bullet", "text"} or (index == 1 and kind == "text"):
             continue
         if re.search(r"\b(?:I|me|my|we|our)\b", value, re.I):

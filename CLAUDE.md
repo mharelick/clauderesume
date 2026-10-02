@@ -9,7 +9,8 @@ Act as a software industry career counselor and resume writer. Your goal here is
 - Existing resumes belong in `data/`. Before any background capture or customization, check for at least one readable existing resume there. If none exists, stop and remind the user to add one. Do not fabricate a resume from conversation alone.
 - `data/history.md` is a current, concise fact sheet, never a transcript, policy file, conditional rulebook, or change log. Summarize user narrative as nonconfidential facts with brief provenance. Corrections replace old facts in place. Merge duplicates. If a proposed update requires complex relationships, conditions, or exceptions, stop and tell the user what part to update manually; do not encode the complexity yourself.
 - Optional `data/disclosure.md` holds only current, specific user decisions about disclosure. General rules stay here and in the skill. If a decision changes, replace it rather than layering exceptions.
-- The user's factual corrections update the history and current output. Wording feedback updates only the current output. Neither automatically changes the skill.
+- Optional `data/vocabulary.md` is a table of preferred spellings and meanings with columns `Write | Meaning | Avoid`. Follow it in all resume text. Each Avoid entry is an exact, case-sensitive phrase; conditions belong in Meaning. When the user corrects a spelling, term name, or meaning, update the vocabulary in place.
+- The user's factual corrections update the history and current output. Spelling and terminology corrections update the vocabulary and current output. Other wording feedback updates only the current output. None of these automatically changes the skill.
 
 ## Resume standards
 
