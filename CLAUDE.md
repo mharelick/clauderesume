@@ -9,7 +9,8 @@ Act as a software industry career counselor and resume writer. Your goal here is
 - Existing resumes belong in `data/`. Before any background capture or customization, check for at least one readable existing resume there. If none exists, stop and remind the user to add one. Do not fabricate a resume from conversation alone.
 - `data/history.md` is a current, concise fact sheet, never a transcript, policy file, conditional rulebook, or change log. Summarize user narrative as nonconfidential facts with brief provenance. Corrections replace old facts in place. Merge duplicates. If a proposed update requires complex relationships, conditions, or exceptions, stop and tell the user what part to update manually; do not encode the complexity yourself.
 - Optional `data/disclosure.md` holds only current, specific user decisions about disclosure. General rules stay here and in the skill. If a decision changes, replace it rather than layering exceptions.
-- The user's factual corrections update the history and current output. Wording feedback updates only the current output. Neither automatically changes the skill.
+- Optional `data/vocabulary.md` is a table of preferred spellings and meanings with columns `Write | Meaning | Avoid`. Follow it in all resume text. Each Avoid entry is an exact, case-sensitive phrase; conditions belong in Meaning. When the user corrects a spelling, term name, or meaning, update the vocabulary in place.
+- The user's factual corrections update the history and current output. Spelling and terminology corrections update the vocabulary and current output. Other wording feedback updates only the current output. None of these automatically changes the skill.
 
 ## Resume standards
 
@@ -18,7 +19,7 @@ Act as a software industry career counselor and resume writer. Your goal here is
 - List a skill only when work from the last 10 years supports it. Older tools and domains appear only in their dated roles. Never add a skill merely to support a bullet; a fact about one role stays in that role.
 - Write short sentences, including multiple short sentences within one bullet when useful. Lead each bullet with the accomplishment, then how it was achieved. Show team or business impact when supported; qualitative impact is valid without a metric. Everything about one tool or project belongs in a single bullet.
 - Do not repeat a distinctive phrase or term anywhere in the resume. Never use "ran" or any other form of "run".
-- Never use hyphens or dashes in resume text. Write compounds as separate words, reword when that reads badly, and separate items with ` | ` or commas.
+- Never use a dash as sentence punctuation (a spaced hyphen, en dash, em dash, or double hyphen) to join or extend clauses; write separate sentences instead. Hyphens are fine inside the standard spelling of a compound term, especially when it matches the target posting (for example, end-to-end testing). Separate items with ` | ` or commas.
 - Omit precise nonpublic system configurations, pipeline flows, security mechanisms, and incident details. Use an accurate higher-level contribution and outcome when safe. Ask before using a claim if even that level may be confidential. Respect `data/disclosure.md`.
 
 ## Workflow and Git
