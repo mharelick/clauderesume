@@ -30,7 +30,7 @@ class RendererTest(unittest.TestCase):
             source.write_text(
                 "# Sample Candidate\nCity, ST | sample@example.invalid\n"
                 "## Summary\nSoftware test engineer focused on reliable releases.\n"
-                "## Experience\n### Test Engineer - Example Company - 2020-2024\n"
+                "## Experience\n### Test Engineer | Example Company | 2020 to 2024\n"
                 "- Built regression checks for a service. Improved release confidence for the team.\n"
                 "## Skills\nPython, API testing, automation\n",
                 encoding="utf-8",
@@ -51,6 +51,9 @@ class RendererTest(unittest.TestCase):
             bad_first_person = renderer.parse_markdown("# Sample Candidate\n## Experience\n- I built a framework.\n")
             with self.assertRaises(ValueError):
                 renderer.validate(bad_first_person, data)
+            for dashed in ("- Built end-to-end checks.", "- Built checks — quickly."):
+                with self.assertRaises(ValueError):
+                    renderer.validate(renderer.parse_markdown(f"# Sample Candidate\n## Experience\n{dashed}\n"), data)
             bad_copy = renderer.parse_markdown(
                 "# Sample Candidate\n## Experience\n"
                 "- The source had a long distinctive sentence about a fictional service and its release checks.\n"

@@ -87,8 +87,14 @@ def copied_prose(blocks: list[Block], data_dir: Path, width: int = 10) -> str | 
     return None
 
 
+DASH_RE = re.compile(r"[-‐-―−]")
+
+
 def validate(blocks: list[Block], data_dir: Path) -> None:
     for index, (kind, value) in enumerate(blocks):
+        # The name and contact line may legitimately contain hyphens (emails, URLs).
+        if kind != "name" and not (index == 1 and kind == "text") and DASH_RE.search(value):
+            raise ValueError("Hyphen or dash found; write compounds as separate words or reword")
         if kind not in {"bullet", "text"} or (index == 1 and kind == "text"):
             continue
         if re.search(r"\b(?:I|me|my|we|our)\b", value, re.I):
@@ -158,7 +164,7 @@ def write_pdf(blocks: list[Block], target: Path) -> None:
         story.append(Paragraph(escape(value), styles[style], bulletText="•" if kind == "bullet" else None))
     document = SimpleDocTemplate(str(target), pagesize=letter, leftMargin=0.7 * inch,
                                  rightMargin=0.7 * inch, topMargin=0.65 * inch,
-                                 bottomMargin=0.65 * inch, title=blocks[0][1] + " - Resume")
+                                 bottomMargin=0.65 * inch, title=blocks[0][1] + " Resume")
     document.build(story)
 
 
