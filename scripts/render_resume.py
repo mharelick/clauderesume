@@ -135,12 +135,13 @@ def validate(blocks: list[Block], data_dir: Path) -> None:
 def write_docx(blocks: list[Block], target: Path) -> None:
     doc = Document()
     page = doc.sections[0]
-    page.top_margin = page.bottom_margin = Inches(0.65)
-    page.left_margin = page.right_margin = Inches(0.7)
+    page.top_margin = page.bottom_margin = Inches(0.5)
+    page.left_margin = page.right_margin = Inches(0.6)
     normal = doc.styles["Normal"]
     normal.font.name = "Calibri"
     normal.font.size = Pt(10)
-    normal.paragraph_format.space_after = Pt(3)
+    normal.paragraph_format.space_after = Pt(2)
+    normal.paragraph_format.line_spacing = 1.0
     for index, (kind, value) in enumerate(blocks):
         if kind == "name":
             para = doc.add_paragraph()
@@ -151,12 +152,12 @@ def write_docx(blocks: list[Block], target: Path) -> None:
         elif kind == "section":
             para = doc.add_paragraph()
             para.alignment = 1
-            para.paragraph_format.space_before = Pt(9)
+            para.paragraph_format.space_before = Pt(6)
             para.paragraph_format.keep_with_next = True
             para.add_run(value.upper()).bold = True
         elif kind == "role":
             para = doc.add_paragraph()
-            para.paragraph_format.space_before = Pt(5)
+            para.paragraph_format.space_before = Pt(3)
             para.paragraph_format.keep_with_next = True
             para.add_run(value).bold = True
         elif kind == "bullet":
@@ -173,20 +174,20 @@ def write_docx(blocks: list[Block], target: Path) -> None:
 
 def write_pdf(blocks: list[Block], target: Path) -> None:
     styles = {
-        "name": ParagraphStyle("name", fontName="Helvetica-Bold", fontSize=16, leading=19, alignment=TA_CENTER, spaceAfter=3),
-        "contact": ParagraphStyle("contact", fontName="Helvetica", fontSize=9, leading=12, alignment=TA_CENTER, spaceAfter=7),
-        "section": ParagraphStyle("section", fontName="Helvetica-Bold", fontSize=10, leading=12, textColor=colors.HexColor("#18354D"), alignment=TA_CENTER, spaceBefore=9, spaceAfter=3, keepWithNext=True),
-        "role": ParagraphStyle("role", fontName="Helvetica-Bold", fontSize=10, leading=12, spaceBefore=5, spaceAfter=2, keepWithNext=True),
-        "text": ParagraphStyle("text", fontName="Helvetica", fontSize=9.5, leading=12.5, spaceAfter=3),
-        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=9.5, leading=12.5, leftIndent=15, firstLineIndent=-8, spaceAfter=3),
+        "name": ParagraphStyle("name", fontName="Helvetica-Bold", fontSize=16, leading=18, alignment=TA_CENTER, spaceAfter=1),
+        "contact": ParagraphStyle("contact", fontName="Helvetica", fontSize=9, leading=11, alignment=TA_CENTER, spaceAfter=3),
+        "section": ParagraphStyle("section", fontName="Helvetica-Bold", fontSize=10, leading=12, textColor=colors.HexColor("#18354D"), alignment=TA_CENTER, spaceBefore=6, spaceAfter=2, keepWithNext=True),
+        "role": ParagraphStyle("role", fontName="Helvetica-Bold", fontSize=10, leading=12, spaceBefore=3, spaceAfter=1, keepWithNext=True),
+        "text": ParagraphStyle("text", fontName="Helvetica", fontSize=10, leading=12, spaceAfter=2),
+        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=10, leading=12, leftIndent=15, firstLineIndent=-8, spaceAfter=2),
     }
     story = []
     for index, (kind, value) in enumerate(blocks):
         style = "contact" if kind == "text" and index == 1 else kind
         story.append(Paragraph(escape(value), styles[style], bulletText="•" if kind == "bullet" else None))
-    document = SimpleDocTemplate(str(target), pagesize=letter, leftMargin=0.7 * inch,
-                                 rightMargin=0.7 * inch, topMargin=0.65 * inch,
-                                 bottomMargin=0.65 * inch, title=blocks[0][1] + " Resume")
+    document = SimpleDocTemplate(str(target), pagesize=letter, leftMargin=0.6 * inch,
+                                 rightMargin=0.6 * inch, topMargin=0.5 * inch,
+                                 bottomMargin=0.5 * inch, title=blocks[0][1] + " Resume")
     document.build(story)
 
 
