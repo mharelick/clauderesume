@@ -23,7 +23,7 @@ Tests the whole system as a black box, end to end, the way a client experiences 
 
 ## Bloomberg L.P. | Quality Engineer | Princeton, NJ | Aug 2018 to Aug 2026
 
-Context: Bloomberg Transaction Cost Analysis (BTCA), a post-trade analytics service. Worked in two week sprints.
+Context: Bloomberg Transaction Cost Analysis (BTCA), a post-trade analytics service. Tested the instruments BTCA supports, through the end-to-end and OTC frameworks: equities; government, corporate, municipal, and mortgage bonds; FX spot, forwards, and swaps; exchange-traded index, commodity, bond, and currency derivatives (outrights, rolls, and options); and OTC interest rate, equity, and credit default swaps and options. Single-leg and multi-leg trades. Worked in two week sprints.
 
 Skills and tools: Python | Python Behave | SQL | C++ code analysis | Linux | Windows 11 | Docker | Git | Jira | GitHub Copilot | Claude | FIX message analysis | test planning | test design | data driven testing | exploratory and regression testing | root cause analysis
 
@@ -31,7 +31,7 @@ Skills and tools: Python | Python Behave | SQL | C++ code analysis | Linux | Win
 
 - Situation: BTCA external trade feeds had no consistent testing.
 - Objective: Improve the reliability of external trade feeds.
-- Action: Built a no code, data driven Python framework on Windows; each test is a data file plus a validation entry, and no programming is needed to add one. It injects simulated trades and validates results by querying the BTCA Data Access API, which it used only to request data. Tested features, fixes for reported bugs, reproductions of production bugs, and requests from the publicly named Post Trade Implementation team, which owns client onboarding and client problems. Tested end to end, from simulated feed input to final report, across BTCA and upstream systems, in daily regression against beta code. Designed tests across equities, fixed income, FX, and derivatives. Diagnosed defects from reports, logs, FIX messages, and databases, and requested fixes from the owning teams. Copilot assisted with the API integration code and unit tests.
+- Action: Built a no code, data driven Python framework on Windows; each test is a data file plus a validation entry, and no programming is needed to add one. It injects simulated trades and validates results by querying the BTCA Data Access API, which it used only to request data. Tested features, fixes for reported bugs, reproductions of production bugs, and requests from the publicly named Post-Trade Implementation team, which owns client onboarding and client problems. Tested end to end, from simulated feed input to final report, across BTCA and upstream systems, in daily regression against beta code. Diagnosed defects from reports, logs, FIX messages, and databases, and requested fixes from the owning teams. Copilot assisted with the API integration code and unit tests.
 - Result: Consistent end-to-end validation where none existed. Supported thousands of transactions daily. As the only tester working this way, acted as test lead in practice: set the test approach, sourced test data, and automated validation. Findings could stop a release from reaching production.
 - Core message: Established reliable testing for external trade feeds and owned it.
 - Fits: QA lead, test automation, trading or financial data platforms
@@ -54,7 +54,7 @@ Skills and tools: Python | Python Behave | SQL | C++ code analysis | Linux | Win
 - Action: Maintained and expanded an existing Python Behave framework for exploratory and regression testing on Linux. Wrote shell scripts connecting it to automated test execution. Containerized it with Docker; designed the Dockerfiles, which Copilot generated.
 - Result: Greater confidence in BTCA support for client instruments.
 - Core message: Behavior Driven Development applied to complex instruments.
-- Fits: BDD, test automation, derivatives
+- Fits: BDD, test automation, OTC instruments
 - Never claim: That the framework was originally built from scratch
 
 ## Bank of America Merrill Lynch | Vice President, Quality Assurance Professional | New York, NY | May 2016 to Mar 2018

@@ -55,13 +55,14 @@ class RendererTest(unittest.TestCase):
             for dashed in ("- Built checks - quickly.", "- Built checks — quickly.", "- Built checks -- quickly."):
                 with self.assertRaises(ValueError):
                     renderer.validate(renderer.parse_markdown(f"# Sample Candidate\n## Experience\n{dashed}\n"), data)
-            (data / "vocabulary.md").write_text(
+            vocabulary = root / "vocabulary.md"
+            vocabulary.write_text(
                 "| Write | Meaning | Avoid |\n|---|---|---|\n| test environment | Shared test setup | sandbox, Sandbox |\n",
                 encoding="utf-8",
             )
-            renderer.validate(blocks, data)
+            renderer.validate(blocks, data, vocabulary)
             with self.assertRaises(ValueError):
-                renderer.validate(renderer.parse_markdown("# Sample Candidate\n## Experience\n- Built a sandbox.\n"), data)
+                renderer.validate(renderer.parse_markdown("# Sample Candidate\n## Experience\n- Built a sandbox.\n"), data, vocabulary)
             bad_copy = renderer.parse_markdown(
                 "# Sample Candidate\n## Experience\n"
                 "- The source had a long distinctive sentence about a fictional service and its release checks.\n"

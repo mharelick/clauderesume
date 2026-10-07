@@ -8,7 +8,7 @@ Install Python 3 and the local document dependencies once, from a terminal in th
 python -m pip install -r requirements.txt
 ```
 
-Put at least one existing resume in the root `data\` directory. You may also put supporting notes and job-description files there. Claude creates the concise, editable `data\history.md` on the first run. You can paste a job description into Claude instead of saving it as a file. Invoke `/resume-customizer` with the target description, a path, or a platform profile purpose; ordinary career narrative can be shared for history capture without a target posting.
+Put at least one existing resume in the root `data\` directory. You may also put supporting notes and job-description files there. Career facts live in the public `stories.md` at the repository root; keep identifying details out of it. You can paste a job description into Claude instead of saving it as a file. Invoke `/resume-customizer` with the target description, a path, or a platform profile purpose; ordinary career narrative can be shared to update `stories.md` without a target posting.
 
 Each requested version gets its own `output\YYYY-MM-DD_company_role\` or `output\YYYY-MM-DD_profile_platform\` directory. It contains `resume.docx`, `resume.pdf`, `resume.txt`, `resume.md`, and `notes.md`. Claude generates all four resume formats in the same run.
 

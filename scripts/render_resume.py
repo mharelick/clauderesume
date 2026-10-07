@@ -92,10 +92,9 @@ def copied_prose(blocks: list[Block], data_dir: Path, width: int = 10) -> str | 
 DASH_RE = re.compile(r"[‒-―−]|\s-|-\s|--")
 
 
-def load_vocabulary(data_dir: Path) -> list[tuple[str, str]]:
+def load_vocabulary(path: Path | None) -> list[tuple[str, str]]:
     """Return (avoid, write) pairs from the Write | Meaning | Avoid tables in vocabulary.md."""
-    path = data_dir / "vocabulary.md"
-    if not path.is_file():
+    if path is None or not path.is_file():
         return []
     pairs = []
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -106,8 +105,8 @@ def load_vocabulary(data_dir: Path) -> list[tuple[str, str]]:
     return pairs
 
 
-def validate(blocks: list[Block], data_dir: Path) -> None:
-    vocabulary = load_vocabulary(data_dir)
+def validate(blocks: list[Block], data_dir: Path, vocabulary_path: Path | None = None) -> None:
+    vocabulary = load_vocabulary(vocabulary_path)
     for index, (kind, value) in enumerate(blocks):
         # The name and contact line may legitimately contain hyphens (emails, URLs).
         if kind == "name" or (index == 1 and kind == "text"):
@@ -116,7 +115,7 @@ def validate(blocks: list[Block], data_dir: Path) -> None:
             raise ValueError("Dash used as sentence punctuation; split into separate sentences")
         for avoid, write in vocabulary:
             if re.search(rf"(?<!\w){re.escape(avoid)}(?!\w)", value):
-                raise ValueError(f"Use '{write}' instead of '{avoid}' (see data/vocabulary.md)")
+                raise ValueError(f"Use '{write}' instead of '{avoid}' (see vocabulary.md)")
         if kind not in {"bullet", "text"} or (index == 1 and kind == "text"):
             continue
         if re.search(r"\b(?:I|me|my|we|our)\b", value, re.I):
@@ -214,7 +213,7 @@ def main() -> None:
         parser.error("source must be an existing resume.md")
     repo_root = Path(__file__).resolve().parent.parent
     blocks = parse_markdown(source.read_text(encoding="utf-8"))
-    validate(blocks, repo_root / "data")
+    validate(blocks, repo_root / "data", repo_root / "vocabulary.md")
     write_docx(blocks, source.with_suffix(".docx"))
     write_pdf(blocks, source.with_suffix(".pdf"))
     write_txt(blocks, source.with_suffix(".txt"))
