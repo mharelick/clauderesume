@@ -29,31 +29,31 @@ Skills and tools: Python | Python Behave | SQL | C++ code analysis | Linux | Win
 
 ### End-to-end testing for BTCA external trade feeds
 
-- Situation: BTCA external trade feeds had no consistent testing.
-- Objective: Improve the reliability of external trade feeds.
-- Action: Built a no code, data driven Python framework on Windows; each test is a data file plus a validation entry, and no programming is needed to add one. It injects simulated trades and validates results by querying the BTCA Data Access API, which it used only to request data. Tested features, fixes for reported bugs, reproductions of production bugs, and requests from the publicly named Post-Trade Implementation team, which owns client onboarding and client problems. Tested end to end, from simulated feed input to final report, across BTCA and upstream systems, in daily regression against beta code. Diagnosed defects from reports, logs, FIX messages, and databases, and requested fixes from the owning teams. Copilot assisted with the API integration code and unit tests.
-- Result: Consistent end-to-end validation where none existed. Supported thousands of transactions daily. As the only tester working this way, acted as test lead in practice: set the test approach, sourced test data, and automated validation. Findings could stop a release from reaching production.
-- Core message: Established reliable testing for external trade feeds and owned it.
+- Situation: Errors in BTCA external trade feeds were costly when they reached clients. Corrections took developer and client time, and repeated failures put client relationships and reputation at risk.
+- Objective: Reduce operational and reputational risk in processing external trade feeds.
+- Action: Built a no code, data driven Python framework on Windows; each test is a data file plus a validation entry, and no programming is needed to add one. The framework tested the full flow, from feed input to processed BTCA results, as a black box. It injects simulated trades and validates results by querying the BTCA Data Access API, which it used only to request data. Tested features, fixes for reported bugs, reproductions of production bugs, and requests from the publicly named Post-Trade Implementation team, which owns client onboarding and client problems. Tested end to end, from simulated feed input to final report, across BTCA and upstream systems, in daily regression against beta code. Diagnosed defects from reports, logs, FIX messages, and databases, and requested fixes from the owning teams. Copilot assisted with the API integration code and unit tests.
+- Result: Black box tests detected feed errors, and root cause analysis located where each occurred, so fixes went to the owning teams. Supported thousands of transactions daily. As the only tester working this way, acted as test lead in practice: set the test approach, sourced test data, and automated validation. Findings could stop a release from reaching production.
+- Core message: Reduced operational and reputational risk by detecting external trade feed errors through end-to-end testing and locating each through root cause analysis.
 - Fits: QA lead, test automation, trading or financial data platforms
 - Never claim: Speed of the framework; that the API was used to send data; that others used the framework
 
 ### Post deployment database checks
 
-- Situation: Database transactions in a large C++ codebase lacked matching integrity checks.
-- Objective: Detect data problems after each deployment.
+- Situation: Database update errors introduced by a deployment could affect real clients. Database transactions in a large C++ codebase lacked matching integrity checks.
+- Objective: Reduce the risk of database update errors reaching clients by checking production data after each deployment.
 - Action: Used Claude to scan the codebase for unchecked transactions and derive SQL checks. Reviewed and added them to the check library.
-- Result: Post deployment checks executed in beta and production and were still in use at departure.
-- Core message: Applied AI tooling to close gaps in production data checks.
+- Result: Post deployment checks executed in beta and, as a last check, in production against real data. They were still in use at departure.
+- Core message: Applied AI tooling to add a last production check against database update errors reaching clients.
 - Fits: QA, data quality, AI assisted engineering
 - Never claim: That the checks caught defects
 
 ### OTC instrument testing with Python Behave
 
-- Situation: Clients create customized OTC instruments that BTCA must accept.
-- Objective: Improve confidence that BTCA accepts those instruments.
-- Action: Maintained and expanded an existing Python Behave framework for exploratory and regression testing on Linux. Wrote shell scripts connecting it to automated test execution. Containerized it with Docker; designed the Dockerfiles, which Copilot generated.
-- Result: Greater confidence in BTCA support for client instruments.
-- Core message: Behavior Driven Development applied to complex instruments.
+- Situation: Clients create customized OTC instruments, which pass through upstream Bloomberg systems before reaching BTCA.
+- Objective: Verify that the upstream systems feeding BTCA handle customized OTC instruments.
+- Action: Maintained and expanded an existing Python Behave framework on Linux, first for exploratory testing of the functionality and then for regression testing. Wrote shell scripts connecting it to automated test execution. Containerized it with Docker; designed the Dockerfiles, which Copilot generated.
+- Result: Exploratory testing found defects in the upstream systems, which were corrected. Regression testing through the framework found errors when the upstream systems were modified.
+- Core message: Behavior Driven Development applied to complex instruments, finding defects and regressions in the systems feeding BTCA.
 - Fits: BDD, test automation, OTC instruments
 - Never claim: That the framework was originally built from scratch
 
@@ -90,9 +90,9 @@ Skills and tools: .NET | C# | Python | shell scripting | fuzz testing | test fra
 ### Matching engine stress testing
 
 - Situation: Matching engine crash defects needed to be found before production.
-- Objective: Expose failures under abnormal input.
+- Objective: Reduce operational risk by exposing matching engine failures under abnormal input before production.
 - Action: Extended a Python fuzz tool and stress tested the engine to failure, capturing core dumps for diagnosis.
-- Result: Exposed defects that crashed the matching engine.
+- Result: Exposed defects that crashed the matching engine, which functional testing had not found.
 - Core message: Resilience testing of an exchange matching engine.
 - Fits: Exchanges, matching engines, resilience and performance testing
 
@@ -108,12 +108,13 @@ Skills and tools: .NET | C# | Python | shell scripting | fuzz testing | test fra
 
 ### .NET automation framework and System Test process
 
-- Situation: Trading and market data applications needed repeatable end-to-end testing and a formal test process.
-- Objective: Automate testing and standardize how failures were handled.
-- Action: Led development of a .NET automation framework and trained System Test engineers on it. Designed the formal System Test process. Automated failure analysis and defect disposition in a .NET results framework.
-- Result: A trained team on a shared framework with automated failure analysis.
+- Situation: A new matching engine and the .NET applications connecting it to external systems were being tested mostly by hand, which was slow.
+- Objective: Automate end-to-end testing and standardize how failures were handled.
+- Action: Led development of a .NET automation framework, which System Test used to automate tests of the external .NET applications and the matching engine. Trained System Test engineers on it. Designed the formal System Test process. Automated failure analysis and defect disposition in a .NET results framework.
+- Result: System Test took on automated end-to-end testing of the external .NET applications and the matching engine, with automated failure analysis, reducing reliance on slow manual testing.
 - Core message: Led framework development and defined the test process.
 - Fits: Test architecture, QA process, team enablement
+- Never claim: Writing the framework's original code
 
 ## DoubleClick / Google | Lead QA Automation Engineer | New York, NY | May 2007 to May 2008
 
