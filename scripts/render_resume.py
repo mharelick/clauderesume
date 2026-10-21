@@ -178,12 +178,13 @@ def write_pdf(blocks: list[Block], target: Path) -> None:
         "section": ParagraphStyle("section", fontName="Helvetica-Bold", fontSize=10, leading=12, textColor=colors.HexColor("#18354D"), alignment=TA_CENTER, spaceBefore=6, spaceAfter=2, keepWithNext=True),
         "role": ParagraphStyle("role", fontName="Helvetica-Bold", fontSize=10, leading=12, spaceBefore=3, spaceAfter=1, keepWithNext=True),
         "text": ParagraphStyle("text", fontName="Helvetica", fontSize=10, leading=12, spaceAfter=2),
-        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=10, leading=12, leftIndent=15, firstLineIndent=-8, spaceAfter=2),
+        "bullet": ParagraphStyle("bullet", fontName="Helvetica", fontSize=10, leading=12, leftIndent=15, bulletIndent=5, firstLineIndent=0, spaceAfter=2),
     }
     story = []
     for index, (kind, value) in enumerate(blocks):
         style = "contact" if kind == "text" and index == 1 else kind
-        story.append(Paragraph(escape(value), styles[style], bulletText="•" if kind == "bullet" else None))
+        text = value.upper() if kind == "section" else value
+        story.append(Paragraph(escape(text), styles[style], bulletText="•" if kind == "bullet" else None))
     document = SimpleDocTemplate(str(target), pagesize=letter, leftMargin=0.6 * inch,
                                  rightMargin=0.6 * inch, topMargin=0.5 * inch,
                                  bottomMargin=0.5 * inch, title=blocks[0][1] + " Resume")
