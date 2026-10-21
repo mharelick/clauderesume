@@ -64,3 +64,14 @@ Preferred spellings and meanings for resume text. Use the "Write" column exactly
 | client onboarding test environment | ISE environment where member firms tested their systems | sandbox |
 | TradeWorks | Public, now retired NYSE trading floor system | |
 | DART Enterprise | DoubleClick ad server product | |
+| Cboe | Cboe Global Markets, an options exchange. The company has styled its name "Cboe" since the October 2017 rename; CBOE is only the ticker symbol. | CBOE Holdings, Chicago Board Options Exchange |
+
+## Networking messages
+
+Casual wording for networking notes, not resume text. Resumes keep the forms above.
+
+| Write | Meaning | Avoid |
+|---|---|---|
+| member testing environment | What the client onboarding test environment was called at ISE; use it with contacts who knew it. Resumes keep "client onboarding test environment". | member test environment |
+| we worked together on X, and I contributed Y | Friendly framing of shared work | wrote X for you |
+| open to other work where I can apply these skills | Positioning for contacts who knew me in a role other than QA | QA person |
