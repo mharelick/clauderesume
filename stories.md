@@ -25,7 +25,7 @@ Tests the whole system as a black box, end to end, the way a client experiences 
 
 Context: Bloomberg Transaction Cost Analysis (BTCA), a post-trade analytics service. Tested the instruments BTCA supports, through the end-to-end and OTC frameworks: equities; government, corporate, municipal, and mortgage bonds; FX spot, forwards, and swaps; exchange-traded index, commodity, bond, and currency derivatives (outrights, rolls, and options); and OTC interest rate, equity, and credit default swaps and options. Single-leg and multi-leg trades. Worked in two week sprints.
 
-Skills and tools: Python | Python Behave | SQL | C++ code analysis | Linux | Windows 11 | Docker | Git | Jira | GitHub Copilot | Claude | FIX message analysis | test planning | test design | data driven testing | exploratory and regression testing | root cause analysis
+Skills and tools: Python | Python Behave | SQL | BLPAPI | C++ code analysis | Linux | Windows 11 | Docker | Git | Jira | GitHub Copilot | Claude | FIX message analysis | test planning | test design | data driven testing | exploratory and regression testing | root cause analysis
 
 ### End-to-end testing for BTCA external trade feeds
 
@@ -51,11 +51,11 @@ Skills and tools: Python | Python Behave | SQL | C++ code analysis | Linux | Win
 
 - Situation: Clients create customized OTC instruments, which pass through upstream Bloomberg systems before reaching BTCA.
 - Objective: Verify that the upstream systems feeding BTCA handle customized OTC instruments.
-- Action: Maintained and expanded an existing Python Behave framework on Linux, first for exploratory testing of the functionality and then for regression testing. Wrote shell scripts connecting it to automated test execution. Containerized it with Docker; designed the Dockerfiles, which Copilot generated.
+- Action: Maintained and expanded an existing Python Behave framework on Linux, first for exploratory testing of the functionality and then for regression testing. Wrote shell scripts connecting it to automated test execution. Containerized it with Docker, directing GitHub Copilot to generate the Dockerfiles.
 - Result: Exploratory testing found defects in the upstream systems, which were corrected. Regression testing through the framework found errors when the upstream systems were modified.
 - Core message: Behavior Driven Development applied to complex instruments, finding defects and regressions in the systems feeding BTCA.
 - Fits: BDD, test automation, OTC instruments
-- Never claim: That the framework was originally built from scratch
+- Never claim: That the framework was originally built from scratch; designing the Dockerfiles by hand; any AI work done without the user's direction and review
 
 ## Bank of America Merrill Lynch | Vice President, Quality Assurance Professional | New York, NY | May 2016 to Mar 2018
 
@@ -83,18 +83,19 @@ Skills and tools: Robot Framework | FIX | TeamCity | Maven | shell scripting | t
 
 ## International Securities Exchange / Nasdaq | Test Automation Engineer, System Test | New York, NY | Jul 2008 to May 2016
 
-Context: ISE was owned by Deutsche Börse during this role. Nasdaq announced its acquisition of ISE on 2016-03-09 and completed it on 2016-06-30 (Nasdaq SEC filings); still at ISE after the announcement.
+Context: ISE was owned by Deutsche Börse during this role. Nasdaq announced its acquisition of ISE on 2016-03-09 and completed it on 2016-06-30 (Nasdaq SEC filings); still at ISE after the announcement. About 85% of the time went to designing and coding test automation, utilities, and simulators; hands-on testing was a small part.
 
-Skills and tools: .NET | C# | Python | shell scripting | fuzz testing | test framework design | QA process design
+Skills and tools: .NET | C# | Python | shell scripting | fuzz testing | test framework design | domain-specific language (DSL) test design | QA process design
 
 ### Matching engine stress testing
 
 - Situation: Matching engine crash defects needed to be found before production.
 - Objective: Reduce operational risk by exposing matching engine failures under abnormal input before production.
-- Action: Extended a Python fuzz tool and stress tested the engine to failure, capturing core dumps for diagnosis.
+- Action: Extended an in-house Python fuzz tool and stress tested the engine to failure, capturing core dumps for diagnosis.
 - Result: Exposed defects that crashed the matching engine, which functional testing had not found.
 - Core message: Resilience testing of an exchange matching engine.
 - Fits: Exchanges, matching engines, resilience and performance testing
+- Never claim: Formal load or performance measurement; load or performance testing as a practiced skill
 
 ### Simulated market makers for client onboarding
 
@@ -108,13 +109,13 @@ Skills and tools: .NET | C# | Python | shell scripting | fuzz testing | test fra
 
 ### .NET automation framework and System Test process
 
-- Situation: A new matching engine and the .NET applications connecting it to external systems were being tested mostly by hand, which was slow.
+- Situation: Testing of a new matching engine and the .NET applications connecting it to external systems needed to go faster.
 - Objective: Automate end-to-end testing and standardize how failures were handled.
-- Action: Led development of a .NET automation framework, which System Test used to automate tests of the external .NET applications and the matching engine. Trained System Test engineers on it. Designed the formal System Test process. Automated failure analysis and defect disposition in a .NET results framework.
-- Result: System Test took on automated end-to-end testing of the external .NET applications and the matching engine, with automated failure analysis, reducing reliance on slow manual testing.
+- Action: Led development of a .NET automation framework, which System Test used to automate tests of the external .NET applications and the matching engine. Trained System Test engineers on it. Designed the formal System Test process. Automated failure analysis and defect disposition in a .NET results framework. Built a centralized test results database, fed by tests executing on many machines, with test results reporting. Built the market data testing capability: the interfaces that sent market data to and collected it from the Market Data Distributor (MDD), the framework extensions, and the domain-specific language syntax. With them, functional tests validated MDD output and injected simulated market data, first by publishing directly to the data stream and later by triggering it from Exegy. System Test script writers wrote the tests.
+- Result: System Test took on automated end-to-end testing of the external .NET applications and the matching engine, with automated failure analysis. Testing of the matching engine was accelerated.
 - Core message: Led framework development and defined the test process.
-- Fits: Test architecture, QA process, team enablement
-- Never claim: Writing the framework's original code
+- Fits: Test architecture, QA process, team enablement, market data systems (use the market data details only for market data contacts and roles)
+- Never claim: Writing the framework's original code; writing the market data tests themselves; that System Test moved from manual to automated testing; data warehouse experience, ETL, or data reconciliation
 
 ## DoubleClick / Google | Lead QA Automation Engineer | New York, NY | May 2007 to May 2008
 
@@ -130,6 +131,7 @@ Skills and tools: Java | Jython | JMeter | FitNesse | JDBC | HttpUnit | HtmlUnit
 - Result: The release with the fewest defects in the product's history.
 - Core message: Team leadership with a measurable quality result.
 - Fits: QA leadership, performance and load testing
+- Never claim: Current JMeter skill (last used 2008)
 
 ## NYSE | Lead Design Analyst / Programmer Analyst | New York, NY | 1999 to 2006
 

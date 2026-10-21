@@ -7,7 +7,7 @@ Preferred spellings and meanings for resume text. Use the "Write" column exactly
 | Write | Meaning | Avoid |
 |---|---|---|
 | Behavior Driven Development | Testing practice: behavior written as readable scenarios. BDD is the practice, not a tool. Add "(BDD)" only if the abbreviation is used again elsewhere in the same resume. | Behavioral Driven Development, Behavior-Driven, Behave (BDD) |
-| end-to-end | Testing a whole flow from first input to final output. Hyphenate before a noun (end-to-end testing), matching job postings. As an adverb after a verb, write "end to end" (tested the system end to end). | E2E, End to End Testing, end to end testing |
+| end-to-end | Testing a whole flow from first input to final output. Hyphenate before a noun (end-to-end testing), matching job postings. Describes the testing or framework, never how errors are found; always hyphenate before a noun (end-to-end test framework). As an adverb after a verb, write "end to end" (tested the system end to end). | E2E, End to End Testing, end to end testing, end to end test framework, end to end point of view, end-to-end point of view |
 | black box | Testing through external behavior, without relying on internals | black-box |
 | data driven | Tests defined by data files rather than code | data-driven |
 | no code | Adding a test needs no programming | no-code |
@@ -21,6 +21,12 @@ Preferred spellings and meanings for resume text. Use the "Write" column exactly
 | stress testing | Pushing a system to failure | stress-testing |
 | sign off on | Formally approve (American usage); always include "on" | sign-off |
 | execute, perform, support | Verbs for tests and tools | ran, Ran, run, Run, runs, running, Running |
+| reputational risk | Standard risk category: harm to standing with clients or the market | reputation risk, Reputation risk |
+| operational risk | Standard risk category: loss from failed processes, systems or people, such as rollbacks and rework | |
+| financial risk | Standard risk category: revenue loss or added cost. Claim only when defensible in an interview. | |
+| data risk | Standard risk category: inaccurate or incomplete data reaching users | |
+| centralized test results | Test results from many machines collected in one database. All sources are the same type, so never call it a data warehouse or ETL. | |
+| test results reporting | Reporting from the centralized test results database | |
 | equity derivatives, equity options | Name the specific kind of derivative. Never write bare "derivatives". |  |
 
 ## Tools and platforms
@@ -35,6 +41,9 @@ Preferred spellings and meanings for resume text. Use the "Write" column exactly
 | Robot Framework | Test framework (Bank of America) | robot framework |
 | TeamCity, Maven | CI server and Java build tool (Bank of America) | Teamcity |
 | FIX | Financial Information eXchange messages; working knowledge, not expertise | FIX protocol |
+| BLPAPI | Bloomberg's public API for real-time and historical data; the BTCA Data Access API is a service carried over it | BLP API, Blpapi |
+| Market Data Distributor (MDD) | Common industry term for the component that distributes market data within a trading system | |
+| Exegy | External market data product used at ISE | |
 
 ## Employers, products, and teams
 
