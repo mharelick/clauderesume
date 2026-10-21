@@ -21,6 +21,8 @@ Run the renderer and tests with `.venv/bin/python` on macOS or Linux, for exampl
 
 Paths below are written with Windows backslashes; use forward slashes on macOS or Linux.
 
+Put your name and contact line in `data/contact.md`, as two lines: `# Your Name`, then `City, ST | email | phone | links`. It stays private. A headerless body such as `generic-resume.md` is joined to it when rendered: `python scripts/render_resume.py generic-resume.md` writes the DOCX, PDF, TXT and Markdown to `output/generic-resume/`. A `resume.md` that has its own header still renders beside itself.
+
 Put at least one existing resume in the root `data\` directory. You may also put supporting notes and job-description files there. Career facts live in the public `stories.md` at the repository root; keep identifying details out of it. You can paste a job description into Claude instead of saving it as a file. Invoke `/resume-customizer` with the target description, a path, or a platform profile purpose; ordinary career narrative can be shared to update `stories.md` without a target posting.
 
 Each requested version gets its own `output\YYYY-MM-DD_company_role\` or `output\YYYY-MM-DD_profile_platform\` directory. It contains `resume.docx`, `resume.pdf`, `resume.txt`, `resume.md`, and `notes.md`. Claude generates all four resume formats in the same run.

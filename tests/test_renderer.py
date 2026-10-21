@@ -71,5 +71,55 @@ class RendererTest(unittest.TestCase):
                 renderer.validate(bad_copy, data)
 
 
+class ContactFileTest(unittest.TestCase):
+    BODY = "## Sample Role\n\nBuilds reliable checks.\n\n## Experience\n\n### Engineer | Example Corp | 2020 to 2024\n\n- Built end-to-end checks for payment flows.\n"
+    CONTACT = "# Pat Sampleton\nSampleville, ST | pat@example.invalid | 555.010.0199\n"
+
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.root = Path(self.directory.name)
+        (self.root / "data").mkdir()
+        (self.root / "data" / "contact.md").write_text(self.CONTACT, encoding="utf-8")
+        self.body = self.root / "generic.md"
+        self.body.write_text(self.BODY, encoding="utf-8")
+
+    def test_body_is_joined_to_contact_and_rendered_under_output(self):
+        folder = renderer.render(self.body, self.root)
+        self.assertEqual(folder, (self.root / "output" / "generic").resolve())
+        for name in ("resume.md", "resume.docx", "resume.pdf", "resume.txt"):
+            self.assertTrue((folder / name).is_file(), name)
+        self.assertTrue((folder / "resume.md").read_text(encoding="utf-8").startswith("# Pat Sampleton\n"))
+        self.assertIn("Pat Sampleton", PdfReader(folder / "resume.pdf").pages[0].extract_text())
+        self.assertNotIn("Pat Sampleton", self.body.read_text(encoding="utf-8"))
+        self.assertEqual(list(self.root.glob("generic.*")), [self.body])
+
+    def test_output_outside_output_dir_is_refused(self):
+        with self.assertRaises(ValueError):
+            renderer.render(self.body, self.root, out_dir=self.root / "elsewhere")
+
+    def test_body_repeating_contact_details_is_refused(self):
+        for leak in ("Reach me at pat@example.invalid", "Call 555.010.0199", "Sampleton led it", "Based in Sampleville, ST"):
+            self.body.write_text(self.BODY + f"\n{leak}.\n", encoding="utf-8")
+            with self.assertRaises(ValueError, msg=leak):
+                renderer.render(self.body, self.root)
+
+    def test_missing_or_malformed_contact_file_is_refused(self):
+        (self.root / "data" / "contact.md").unlink()
+        with self.assertRaises(ValueError):
+            renderer.render(self.body, self.root)
+        (self.root / "data" / "contact.md").write_text("# Pat Sampleton\n", encoding="utf-8")
+        with self.assertRaises(ValueError):
+            renderer.render(self.body, self.root)
+
+    def test_headed_resume_keeps_working_and_rejects_contact_options(self):
+        headed = self.root / "resume.md"
+        headed.write_text(self.CONTACT.replace("\n", "\n\n", 1) + self.BODY, encoding="utf-8")
+        self.assertEqual(renderer.render(headed, self.root), self.root)
+        self.assertTrue((self.root / "resume.pdf").is_file())
+        with self.assertRaises(ValueError):
+            renderer.render(headed, self.root, contact_path=self.root / "data" / "contact.md")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,13 @@
-"""Validate resume.md and write resume.docx, resume.pdf, and resume.txt beside it.
+"""Validate a resume and write resume.docx, resume.pdf, and resume.txt.
 
-Run from the repository root: python scripts/render_resume.py output/<version>/resume.md
+Run from the repository root:
+  python scripts/render_resume.py output/<version>/resume.md
+  python scripts/render_resume.py <body>.md [--contact data/contact.md] [--out output/<name>]
+
+A resume.md that starts with "# Name" renders beside itself. A body file with no header (it
+starts at "## ...") is joined to the private contact file (two lines: "# Name" and a contact
+line) and rendered under output/ only, so a file holding contact details never lands in a
+tracked location.
 """
 
 from __future__ import annotations
@@ -205,20 +212,75 @@ def write_txt(blocks: list[Block], target: Path) -> None:
     target.write_text("\n".join(lines).strip() + "\n", encoding="utf-8")
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("source", type=Path, help="Path to output/<version>/resume.md")
-    args = parser.parse_args()
-    source: Path = args.source
-    if source.name != "resume.md" or not source.is_file():
-        parser.error("source must be an existing resume.md")
-    repo_root = Path(__file__).resolve().parent.parent
-    blocks = parse_markdown(source.read_text(encoding="utf-8"))
+EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+PHONE_RE = re.compile(r"(?<!\d)(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}(?!\d)")
+
+
+def is_headerless(text: str) -> bool:
+    return not text.lstrip().startswith("# ")
+
+
+def check_no_identifiers(body: str, contact: str) -> None:
+    """Refuse a body that repeats the name or contact details from the contact file."""
+    if EMAIL_RE.search(body) or PHONE_RE.search(body):
+        raise ValueError("Resume body contains an email address or phone number; keep it in the contact file")
+    lowered = body.lower()
+    name_line, _, contact_line = contact.strip().partition("\n")
+    words_in_name = [t for t in re.split(r"[\s,]+", name_line.lstrip("# ")) if len(t) >= 4]
+    fields = [f.strip() for f in contact_line.split("|") if len(f.strip()) >= 4]
+    for term in words_in_name + fields:
+        if re.search(rf"(?<!\w){re.escape(term.lower())}(?!\w)", lowered):
+            raise ValueError("Resume body repeats a name or contact detail from the contact file")
+
+
+def load_contact(path: Path) -> str:
+    if not path.is_file():
+        raise ValueError(f"Contact file not found: {path} (two lines: '# Name', then a contact line)")
+    lines = [line for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if len(lines) != 2 or not lines[0].startswith("# "):
+        raise ValueError("Contact file must have exactly two lines: '# Name' and a contact line")
+    return "\n".join(lines)
+
+
+def render(source: Path, repo_root: Path, contact_path: Path | None = None, out_dir: Path | None = None) -> Path:
+    """Validate and render one resume; return the directory the files were written to."""
+    text = source.read_text(encoding="utf-8")
+    if is_headerless(text):
+        output_root = (repo_root / "output").resolve()
+        out_dir = (out_dir or output_root / source.stem).resolve()
+        if out_dir != output_root and output_root not in out_dir.parents:
+            raise ValueError("A headerless body renders only under output/ (it gains contact details)")
+        contact = load_contact(contact_path or repo_root / "data" / "contact.md")
+        check_no_identifiers(text, contact)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        target = out_dir / "resume.md"
+        target.write_text(contact + "\n\n" + text.lstrip(), encoding="utf-8")
+    else:
+        if source.name != "resume.md" or out_dir is not None or contact_path is not None:
+            raise ValueError("A resume with its own header must be named resume.md; --out and --contact do not apply")
+        target = source
+    blocks = parse_markdown(target.read_text(encoding="utf-8"))
     validate(blocks, repo_root / "data", repo_root / "vocabulary.md")
-    write_docx(blocks, source.with_suffix(".docx"))
-    write_pdf(blocks, source.with_suffix(".pdf"))
-    write_txt(blocks, source.with_suffix(".txt"))
-    print("Rendered DOCX, PDF, TXT, and Markdown in", source.parent)
+    write_docx(blocks, target.with_suffix(".docx"))
+    write_pdf(blocks, target.with_suffix(".pdf"))
+    write_txt(blocks, target.with_suffix(".txt"))
+    return target.parent
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("source", type=Path, help="resume.md with a header, or a headerless body .md")
+    parser.add_argument("--contact", type=Path, help="contact file for a headerless body (default data/contact.md)")
+    parser.add_argument("--out", type=Path, help="output folder under output/ for a headerless body")
+    args = parser.parse_args()
+    if not args.source.is_file():
+        parser.error("source file not found")
+    repo_root = Path(__file__).resolve().parent.parent
+    try:
+        folder = render(args.source, repo_root, args.contact, args.out)
+    except ValueError as exc:
+        parser.error(str(exc))
+    print("Rendered DOCX, PDF, TXT, and Markdown in", folder)
 
 
 if __name__ == "__main__":
