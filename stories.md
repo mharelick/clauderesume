@@ -21,6 +21,73 @@ Tests the whole system as a black box, end to end, the way a client experiences 
 - Speed claims for the BTCA test framework
 - Other metrics beyond those stated here
 
+## Transferable skills
+
+Skills the user can apply in any role. "Last used" is the last month of real work with the skill. Comfort is the user's own rating: 5 designs and teaches it, 4 works independently, 3 works with reference, 2 used but rusty or narrow, 1 aware only. The "Never claim" list above still governs what a resume may say.
+
+### Practices
+
+| Skill | Last used | Comfort |
+|---|---|---|
+| End-to-end system testing | 2026-08 | 5 |
+| Test design and planning | 2026-08 | 5 |
+| Test framework design | 2026-08 | 5 |
+| Data driven test automation | 2026-08 | 5 |
+| Black box testing | 2026-08 | 5 |
+| Regression testing | 2026-08 | 5 |
+| Root cause analysis and defect diagnosis | 2026-08 | 5 |
+| Exploratory testing | 2026-08 | 4 |
+| Behavior Driven Development | 2026-08 | 4 |
+| Integration testing | 2026-08 | 4 |
+| Defining expected behavior with business and engineering teams | 2026-08 | 4 |
+| Post deployment data checks | 2026-08 | 3 |
+| QA process design | 2016-05 | 4 |
+| Test results reporting | 2016-05 | 3 |
+| Training and mentoring engineers | 2016-05 | 3 |
+| Stress and fuzz testing | 2016-05 | 3 |
+| Release sign off | 2018-03 | 3 |
+| Test environment maintenance | 2018-03 | 3 |
+| Leading a small test team | 2008-05 | 3 |
+| Load testing | 2008-05 | 2 |
+| UI automation | 2008-05 | 2 |
+
+### Tools and platforms
+
+| Skill | Last used | Comfort |
+|---|---|---|
+| Python | 2026-08 | 5 |
+| Python Behave | 2026-08 | 4 |
+| SQL | 2026-08 | 4 |
+| Windows 11 | 2026-08 | 4 |
+| Git | 2026-08 | 3 |
+| Jira | 2026-08 | 3 |
+| Linux | 2026-08 | 3 |
+| GitHub Copilot | 2026-08 | 3 |
+| Claude | 2026-08 | 3 |
+| BLPAPI | 2026-08 | 3 |
+| FIX message analysis | 2026-08 | 3 |
+| Docker | 2026-08 | 2 |
+| C++ code analysis | 2026-08 | 2 |
+| Robot Framework | 2018-03 | 3 |
+| TeamCity | 2018-03 | 2 |
+| Maven | 2018-03 | 2 |
+| .NET and C# | 2016-05 | 3 |
+| Java | 2008-05 | 2 |
+| JMeter | 2008-05 | 2 |
+
+### Domains
+
+| Skill | Last used | Comfort |
+|---|---|---|
+| Equities | 2026-08 | 4 |
+| Equity derivatives and options | 2026-08 | 4 |
+| Post-trade analytics | 2026-08 | 4 |
+| Government, corporate, municipal, and mortgage bonds | 2026-08 | 3 |
+| FX spot, forwards, and swaps | 2026-08 | 3 |
+| OTC interest rate, equity, and credit swaps | 2026-08 | 3 |
+| Order routing | 2018-03 | 3 |
+| Exchange matching engines | 2016-05 | 4 |
+
 ## Bloomberg L.P. | Quality Engineer | Princeton, NJ | Aug 2018 to Aug 2026
 
 Context: Bloomberg Transaction Cost Analysis (BTCA), a post-trade analytics service. Tested the instruments BTCA supports, through the end-to-end and OTC frameworks: equities; government, corporate, municipal, and mortgage bonds; FX spot, forwards, and swaps; exchange-traded index, commodity, bond, and currency derivatives (outrights, rolls, and options); and OTC interest rate, equity, and credit default swaps and options. Single-leg and multi-leg trades. Worked in two week sprints.
