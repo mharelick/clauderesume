@@ -1,12 +1,25 @@
-# Windows setup
+# Setup
 
-Extract this package directly into the root of your checked-out GitHub repository. It does not include a `.git` directory or `README.md`. Open that repository folder in Claude Desktop on Windows.
+Extract this package directly into the root of your checked-out GitHub repository. It does not include a `.git` directory or `README.md`. Open that repository folder in Claude Desktop.
 
-Install Python 3 and the local document dependencies once, from a terminal in the repository root:
+Install Python 3 and the local document dependencies once, from a terminal in the repository root. Do not assume a machine is already set up: a fresh checkout has no dependencies installed.
+
+Windows:
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
+
+macOS or Linux, in a virtual environment (`.venv/` is ignored by Git):
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+Run the renderer and tests with `.venv/bin/python` on macOS or Linux, for example `.venv/bin/python scripts/render_resume.py output/<version>/resume.md`.
+
+Paths below are written with Windows backslashes; use forward slashes on macOS or Linux.
 
 Put at least one existing resume in the root `data\` directory. You may also put supporting notes and job-description files there. Career facts live in the public `stories.md` at the repository root; keep identifying details out of it. You can paste a job description into Claude instead of saving it as a file. Invoke `/resume-customizer` with the target description, a path, or a platform profile purpose; ordinary career narrative can be shared to update `stories.md` without a target posting.
 
